@@ -1,11 +1,11 @@
 export interface Monument {
-    readonly datasetid : string,
-    readonly recordid : string,
-    readonly fields : {
-        readonly insee : string,
-        readonly objectid_1 : string,
-        readonly lien_merim : string,
-        readonly objectid : string,
+    datasetid : string,
+    recordid : string,
+    fields : {
+        insee : string,
+        objectid_1 : string,
+        lien_merim : string,
+        objectid : string,
         dep : string,
         type_archi : string,
         nomcom : string,
@@ -13,11 +13,11 @@ export interface Monument {
         st_lengthshape : string,
         geo_shape : {
             type : string,
-            //coordinates, c'est un tableau contenant d'autres tableaux de nombres
+            //coordinates, c'est un tableau contenant d'autres tableaux de nombres. Normalement, c'est un champ en plus de tout le reste, donc l'objet devrait être reconnu par l'interface
         }
         protection : string,
         immeuble : string,
-        date_prot : string, //maybe Date
+        date_prot : Date,
         st_areashape : string,
         ref_merim : string,
         type_prot : string,
@@ -26,5 +26,5 @@ export interface Monument {
         type : string,
         coordinates : number[],
     }
-    record_timestamp : string, //maybe Date
+    record_timestamp : Date,
 }
