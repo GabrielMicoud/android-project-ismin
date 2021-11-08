@@ -23,4 +23,5 @@ export interface Monument {
         coordinates : number[],
     }
     record_timestamp : Date,
+    favorite : boolean,
 }

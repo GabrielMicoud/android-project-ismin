@@ -1,6 +1,6 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
-import { readFile } from 'fs/promises';
 import { HttpService } from '@nestjs/axios';
+import { readFile, writeFile } from 'fs/promises';
 import { Monument } from './Monument';
 import { ExternalMonuments } from './ExternalMonuments';
 import { firstValueFrom, map } from 'rxjs';
@@ -8,7 +8,7 @@ import { firstValueFrom, map } from 'rxjs';
 @Injectable()
 export class AppService {
   private readonly monumentStorage = new Map<string, Monument>();
-  private readonly logger = new Logger(AppService.name);
+  //private readonly logger = new Logger(AppService.name);
 
   constructor(private readonly httpService: HttpService) {}
 
@@ -47,6 +47,7 @@ export class AppService {
                 coordinates : extMonument.geometry.coordinates,
               },
               record_timestamp : new Date(extMonument.record_timestamp),
+              favorite : false, //champ initialisé par défaut à "faux", on le modifie ensuite quand on fait un getMonuments
             })),
           ),
         ),
@@ -54,21 +55,83 @@ export class AppService {
     [...externalMonuments].forEach((monument) => this.addMonument(monument));
   }
 
+  async searchFavorites(monumentsArray: Array<Monument> ,imei: string): Promise<void>{
+    let fileFavorites = await this.readFavoritesFile();
+    for (let monument of monumentsArray){
+      for(let favoriteData of fileFavorites){
+        if(favoriteData.imeiList.includes(imei)){
+          monument.favorite  = true;
+        }
+      }
+    }
+  }
+
   addMonument(monument : Monument): void {
     this.monumentStorage.set(monument.fields.objectid, monument);
   }
 
-  getAllMonuments(): Monument[] {
-    return Array.from(this.monumentStorage.values()).sort((monument1, monument2) => monument1.fields.immeuble.localeCompare(monument2.fields.immeuble));
+  async getAllMonuments(imei: string): Promise<Monument[]> {
+    let monumentsArray = Array.from(this.monumentStorage.values()).sort((monument1, monument2) => monument1.fields.immeuble.localeCompare(monument2.fields.immeuble));
+    if(imei != undefined) await this.searchFavorites(monumentsArray, imei); //modifie les paramètres "favoris" des monuments à true si les monuments sont en favoris
+    return monumentsArray;
   }
 
-  getMonument(objectid : string): Monument {
+  async getMonument(objectid : string, imei: string): Promise<Monument> {
+    let fileFavorites = await this.readFavoritesFile();
     const foundMonument = this.monumentStorage.get(objectid);
     if(!foundMonument) throw new Error(`No monument found with identifier : ${objectid}`);
+    for(let favoriteData of fileFavorites){
+      if(favoriteData.imeiList.includes(imei)){
+        foundMonument.favorite  = true;
+      }
+    }
     return foundMonument;
   }
 
-  favMonument(objectid : string): void {
-
+  async favMonument(objectid : string, imei: string): Promise<void> {
+    let fileFavorites = await this.readFavoritesFile();
+    this.modifyFavorite(fileFavorites, objectid, imei); //modifier la liste des favoris
+    this.writeFavoritesFile(fileFavorites);
+    console.log({imei, objectid});
   }
+
+  modifyFavorite(fileFavorites: Array<{objectid: string, imeiList: Array<string>}>, objectid: string, imei: string){
+    for(let favoriteData of fileFavorites){
+      if(favoriteData.objectid === objectid){
+        //monument trouvé dans la liste des favoris
+        if(favoriteData.imeiList.includes(imei)){
+          //la donnée est déjà en favori
+          favoriteData.imeiList.filter(i => i !== imei);
+        } else {
+          //la donnée d'est pas en favori
+          favoriteData.imeiList.push(imei);
+        }
+        return;
+      }
+    }
+    //le monument n'est pas dans la liste, on l'ajoute donc
+    let newFavoriteData = {
+      objectid : objectid,
+      imeiList : [imei],
+    }
+    fileFavorites.push(newFavoriteData);
+  }
+
+  async readFavoritesFile(){
+    let favorites = await readFile('data/favoris.json', 'utf8');
+    //convert into array
+    const fileFavorites = (JSON.parse(favorites) as any[]).map((favoriteFromFile) => {
+      const convertedFavorite : {objectid: string, imeiList: Array<string>} = {
+        objectid : favoriteFromFile.objectid,
+        imeiList : favoriteFromFile.imeiList,
+      };
+      return convertedFavorite;
+    });
+    return fileFavorites; //array of objects containing an objectid + an array of imei
+  }
+
+  async writeFavoritesFile(fileFavorites: Array<{objectid: string, imeiList: Array<string>}>){
+    await writeFile("data/favoris.json", JSON.stringify(fileFavorites, null, 4));
+  }
+
 }
