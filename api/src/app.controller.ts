@@ -1,4 +1,5 @@
-import { Controller, Get, Put } from '@nestjs/common';
+import { Controller, Get, Put, Param } from '@nestjs/common';
+import { Monument } from './Monument';
 import { AppService } from './app.service';
 
 @Controller()
@@ -6,20 +7,18 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getAllMonuments() : Monument[] {
+    return this.appService.getAllMonuments();
   }
 
-  getMonuments() {
-
+  @Get(':objectid')
+  getMonument(@Param('objectid') objectid : string) : Monument {
+    return this.appService.getMonument(objectid);
   }
 
-  getMonument() {
-
-  }
-
-  @Put()
-  favMonument(){
-    
+  //mettre un monument en favori (bordel ça va être chiant)
+  @Put(':objectid')
+  favMonument(@Param('objectid') objectid : string) : void {
+    this.appService.favMonument(objectid);
   }
 }
