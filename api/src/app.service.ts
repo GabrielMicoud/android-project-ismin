@@ -123,11 +123,25 @@ export class AppService {
       };
       return convertedFavorite;
     });
-    return fileFavorites; //array of objects containing an objectid + an array of imei
+    return fileFavorites; //tableau d'objets
   }
 
   async writeFavoritesFile(fileFavorites: Array<{objectid: string, imeiList: Array<string>}>){
     await writeFile("data/favoris.json", JSON.stringify(fileFavorites, null, 4));
   }
+  
+  /*format du fichier favoris.json : 
 
+  [
+    {
+      "objectid" : "id du monument"
+      "imeiList" : [
+        "random imei",
+        "imei d'un appreil vraiment cool",
+        "agreu, greuha agreuuuu"
+      ]
+    }
+  ]
+  
+  */
 }
