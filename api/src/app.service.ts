@@ -24,28 +24,24 @@ export class AppService {
               datasetid : extMonument.datasetid,
               recordid : extMonument.recordid,
               //fields
-              fields: {
-                insee : extMonument.fields.insee,
-                objectid_1 : extMonument.fields.objectid_1,
-                lien_merim : extMonument.fields.lien_merim,
-                objectid : extMonument.fields.objectid,
-                dep : extMonument.fields.dep,
-                type_archi : extMonument.fields.type_archi,
-                nomcom : extMonument.fields.nomcom,
-                geo_point_2d : extMonument.fields.geo_point_2d,
-                st_lengthshape : extMonument.fields.st_lengthshape,
-                protection : extMonument.fields.protection,
-                immeuble : extMonument.fields.immeuble,
-                date_prot : new Date(extMonument.fields.date_prot),
-                st_areashape : extMonument.fields.st_areashape,
-                ref_merim : extMonument.fields.ref_merim,
-                type_prot : extMonument.fields.type_prot,
-              },
+              insee : extMonument.fields.insee,
+              objectid_1 : extMonument.fields.objectid_1,
+              lien_merim : extMonument.fields.lien_merim,
+              objectid : extMonument.fields.objectid,
+              dep : extMonument.fields.dep,
+              type_archi : extMonument.fields.type_archi,
+              nomcom : extMonument.fields.nomcom,
+              geo_point_2d : extMonument.fields.geo_point_2d,
+              st_lengthshape : extMonument.fields.st_lengthshape,
+              protection : extMonument.fields.protection,
+              immeuble : extMonument.fields.immeuble,
+              date_prot : new Date(extMonument.fields.date_prot),
+              st_areashape : extMonument.fields.st_areashape,
+              ref_merim : extMonument.fields.ref_merim,
+              type_prot : extMonument.fields.type_prot,
               //geometry
-              geometry : {
-                type : extMonument.geometry.type,
-                coordinates : extMonument.geometry.coordinates,
-              },
+              type : extMonument.geometry.type,
+              coordinates : extMonument.geometry.coordinates,
               record_timestamp : new Date(extMonument.record_timestamp),
               favorite : false, //champ initialisé par défaut à "faux", on le modifie ensuite quand on fait un getMonuments
             })),
@@ -67,11 +63,11 @@ export class AppService {
   }
 
   addMonument(monument : Monument): void {
-    this.monumentStorage.set(monument.fields.objectid, monument);
+    this.monumentStorage.set(monument.objectid, monument);
   }
 
   async getAllMonuments(imei: string): Promise<Monument[]> {
-    let monumentsArray = Array.from(this.monumentStorage.values()).sort((monument1, monument2) => monument1.fields.immeuble.localeCompare(monument2.fields.immeuble));
+    let monumentsArray = Array.from(this.monumentStorage.values()).sort((monument1, monument2) => monument1.immeuble.localeCompare(monument2.immeuble));
     if(imei != undefined) await this.searchFavorites(monumentsArray, imei); //modifie les paramètres "favoris" des monuments à true si les monuments sont en favoris
     return monumentsArray;
   }
