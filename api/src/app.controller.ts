@@ -2,7 +2,7 @@ import { Controller, Get, Put, Param, Body, Query } from '@nestjs/common';
 import { Monument } from './Monument';
 import { AppService } from './app.service';
 
-@Controller()
+@Controller("monuments")
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
