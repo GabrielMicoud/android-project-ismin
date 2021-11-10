@@ -13,10 +13,20 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
+private const val ARG_MONUMENTS = "monuments"
 
 class MapsFragment : Fragment() {
+    private lateinit var monuments: ArrayList<Monument>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val argMonuments = requireArguments().getSerializable(ARG_MONUMENTS) as ArrayList<Monument>?
+        monuments = argMonuments ?: ArrayList()
+    }
 
     private val callback = OnMapReadyCallback { googleMap ->
+
         /**
          * Manipulates the map once available.
          * This callback is triggered when the map is ready to be used.
@@ -26,9 +36,19 @@ class MapsFragment : Fragment() {
          * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
          */
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        var coordMean1  : Double = 0.0
+        var coordMean2 : Double = 0.0
+
+        for(monument in monuments){
+            val coord1 = monument.geo_point_2d[0]
+            val coord2 = monument.geo_point_2d[1]
+            googleMap.addMarker(MarkerOptions().position(LatLng(coord1,coord2)).title(monument.immeuble))
+            coordMean1 += coord1
+            coordMean2 += coord2
+        }
+        coordMean1/=monuments.size
+        coordMean2/=monuments.size
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(LatLng(coordMean1,coordMean2)))
     }
 
     override fun onCreateView(
@@ -46,8 +66,12 @@ class MapsFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() : MapsFragment {
-            return MapsFragment()
-        }
+        @JvmStatic
+        fun newInstance(monuments: ArrayList<Monument>) =
+            MapsFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable(ARG_MONUMENTS, monuments)
+                }
+            }
     }
 }

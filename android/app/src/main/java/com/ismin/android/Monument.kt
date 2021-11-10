@@ -13,7 +13,7 @@ data class Monument (val immeuble : String,//nom monument
                      val lien_merim : String,
                      val objectid : String,
                      val type_archi : String,
-                     val geo_point_2d : FloatArray,//coordonnés
+                     val geo_point_2d : DoubleArray,//coordonnés
                      val st_lengthshape : String,
                      val protection : String,
                      val date_prot : Date,
@@ -21,6 +21,6 @@ data class Monument (val immeuble : String,//nom monument
                      val ref_merim : String,
                      val type_prot : String,
                      val type : String,
-                     val coordinates : FloatArray,
+                     val coordinates : DoubleArray,
                      val record_timestamp : Date,
                      val favorite : Boolean,):Serializable {}

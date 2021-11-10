@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity(){
 
     private fun displayMap() {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        val fragment = MapsFragment.newInstance()
+        val fragment = MapsFragment.newInstance(monumentshelf.getAllMonuments())
         fragmentTransaction.replace(R.id.a_main_lyt_fragment_container, fragment)
         fragmentTransaction.commit()
     }
