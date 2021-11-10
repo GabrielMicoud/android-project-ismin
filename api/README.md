@@ -68,11 +68,11 @@ Les données des monuments venant d'Opendatasoft sont présentés comme suit:
         st_areashape : string,
         ref_merim : string,
         type_prot : string,
-    }
+    },
     geometry : {
         type : string,
         coordinates : number[],
-    }
+    },
     record_timestamp : Date,
 }
 ```

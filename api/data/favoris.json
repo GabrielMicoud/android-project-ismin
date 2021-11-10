@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "objectid" : "2944",
+        "imeiList" : [
+            "example imei",
+            "example imei 2"
+        ]
+    }
+]
