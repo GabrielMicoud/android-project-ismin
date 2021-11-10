@@ -1,4 +1,4 @@
-package com.ismin.csproject
+package com.ismin.android
 
 import org.junit.Test
 
