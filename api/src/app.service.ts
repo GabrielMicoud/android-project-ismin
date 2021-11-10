@@ -52,6 +52,7 @@ export class AppService {
   }
 
   async searchFavorites(monumentsArray: Array<Monument> ,imei: string): Promise<void>{
+    if(imei == undefined) return;
     let fileFavorites = await this.readFavoritesFile();
     for (let monument of monumentsArray){
       for(let favoriteData of fileFavorites){
@@ -113,6 +114,21 @@ export class AppService {
     fileFavorites.push(newFavoriteData);
   }
 
+  async searchMonumentByNameDepTypeArchi(term : string, imei : string){
+    const standardTerm = term.toLowerCase().trim();
+    let monuments = await this.getAllMonuments(null);
+    monuments = monuments.filter((monument) => {
+      return (
+        monument.immeuble.toLowerCase().includes(standardTerm) ||
+        monument.insee.toLowerCase().includes(standardTerm) ||
+        monument.dep.toLowerCase().includes(standardTerm)
+      );
+    });
+    if(imei != undefined) this.searchFavorites(monuments, imei);
+    return monuments;
+    
+  }
+
   async readFavoritesFile(){
     let favorites = await readFile('data/favoris.json', 'utf8');
     //convert into array
@@ -138,7 +154,7 @@ export class AppService {
       "imeiList" : [
         "random imei",
         "imei d'un appreil vraiment cool",
-        "agreu, greuha agreuuuu"
+        "bvqbgivqghoshgqhfigthguhrg"
       ]
     }
   ]
