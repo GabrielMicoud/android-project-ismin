@@ -89,4 +89,7 @@ class MainActivity : AppCompatActivity(){
         fragmentTransaction.commit()
     }
 
+    public fun favorite(datasetid : String){
+        monumentService.favMonument(datasetid,imei)
+    }
 }

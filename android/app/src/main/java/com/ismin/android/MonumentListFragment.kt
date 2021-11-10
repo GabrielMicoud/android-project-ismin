@@ -19,7 +19,7 @@ class MonumentListFragment : Fragment() {
 
         val argMonuments = requireArguments().getSerializable(ARG_MONUMENTS) as ArrayList<Monument>?
         monuments = argMonuments ?: ArrayList()
-        adapter = MonumentAdapter(monuments)
+        adapter = MonumentAdapter(monuments, this)
 
     }
 

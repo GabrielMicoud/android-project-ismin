@@ -1,10 +1,11 @@
 package com.ismin.android
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
-class MonumentAdapter(private val monuments: ArrayList<Monument>): RecyclerView.Adapter<MonumentViewHolder>() {
+class MonumentAdapter(private val monuments: ArrayList<Monument>, private val fragment : MonumentListFragment): RecyclerView.Adapter<MonumentViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonumentViewHolder {
         val row = LayoutInflater.from(parent.context).inflate(R.layout.row_monument, parent, false)
@@ -21,6 +22,9 @@ class MonumentAdapter(private val monuments: ArrayList<Monument>): RecyclerView.
         holder.txvDep.text = dep
         holder.txvCom.text = com
         holder.schFav.isChecked = fav
+        holder.schFav.setOnCheckedChangeListener{_,_ ->
+            (fragment.activity as MainActivity).favorite(monuments[position].datasetid)
+        }
     }
 
     override fun getItemCount(): Int {
