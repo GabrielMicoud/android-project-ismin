@@ -61,7 +61,7 @@ Les données des monuments venant d'Opendatasoft sont présentés comme suit:
         st_lengthshape : string,
         geo_shape : {
             type : string,
-        }
+        },
         protection : string,
         immeuble : string,
         date_prot : Date,
