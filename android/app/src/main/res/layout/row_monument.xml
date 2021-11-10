@@ -10,10 +10,11 @@
         android:id="@+id/r_monument_txv_imm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:fontFamily="sans-serif-thin"
         android:text="Tour Eiffel"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/r_monument_sch_fav"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,4 +39,14 @@
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/r_monument_txv_dep"
         app:layout_constraintTop_toTopOf="@+id/r_monument_txv_dep" />
+
+    <Switch
+        android:id="@+id/r_monument_sch_fav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:text="Favori"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

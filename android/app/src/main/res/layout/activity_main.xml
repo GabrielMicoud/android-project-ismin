@@ -21,7 +21,7 @@
         android:id="@+id/a_main_btn_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Liste"
         app:layout_constraintBottom_toTopOf="@+id/a_main_lyt_fragment_container"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -29,7 +29,7 @@
         android:id="@+id/a_main_btn_map"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Maps"
         app:layout_constraintBottom_toTopOf="@+id/a_main_lyt_fragment_container"
         app:layout_constraintEnd_toStartOf="@+id/a_main_btn_info"
         app:layout_constraintStart_toEndOf="@+id/a_main_btn_list" />
@@ -38,7 +38,7 @@
         android:id="@+id/a_main_btn_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="InfoApp"
         app:layout_constraintBottom_toBottomOf="@+id/a_main_btn_map"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

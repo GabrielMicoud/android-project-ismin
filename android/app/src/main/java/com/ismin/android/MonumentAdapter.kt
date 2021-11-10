@@ -12,19 +12,18 @@ class MonumentAdapter(private val monuments: ArrayList<Monument>): RecyclerView.
     }
 
     override fun onBindViewHolder(holder: MonumentViewHolder, position: Int) {
-        val (imm, dep, com) = monuments[position]
+        val imm = monuments[position].immeuble
+        val dep = monuments[position].dep
+        val com = monuments[position].nomcom
+        val fav = monuments[position].favorite
 
         holder.txvImm.text = imm
         holder.txvDep.text = dep
         holder.txvCom.text = com
+        holder.schFav.isChecked = fav
     }
 
     override fun getItemCount(): Int {
         return monuments.size
-    }
-
-    fun refreshData(newMonuments: ArrayList<Monument>) {
-        monuments.clear()
-        monuments.addAll(newMonuments)
     }
 }
