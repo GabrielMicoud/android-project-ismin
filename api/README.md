@@ -34,7 +34,7 @@ Le controller dispose de 4 fonctions principales:
 - Un autre GET, gérant un lien spécifique (le lien du dessus, complété par ```/identifiant_du_monument```). Il appelle la fonction ```getMonument``` du module de service, qui utilise l'identifiant du monument choisi pour le retourner à l'application.
 - Un PUT, utilisant un lien similaire à celui du GET précédent. La fonction ```favMonument``` appelée utilise un *body* fourni par l'utilisateur dans sa requête, de la forme ci-dessous. Cette fonction est utilisée pour mettre un monument en favori ou non.
 ```javascript
-{imei: "l'imei de l'appareil"}
+{imei : "l'imei de l'appareil"}
 ```
 - Enfin, un POST, utilisé pour la recherche de monuments via la fonction ```searchMonuments```. Il est accessible via le lien [https://project-gmd-npl.cleverapps.io/monuments/search](https://project-gmd-npl.cleverapps.io/monuments/search) et nécessite également un *body* de cette forme: 
 ```javascript
