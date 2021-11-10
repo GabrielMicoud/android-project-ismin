@@ -38,9 +38,9 @@ L'API a été codé en Typescript, et possède plusieurs fonctions principales :
 - Une fonction ```getAllMonuments```, qui affiche tous les monuments dans une liste, certains monuments étant affichés en favoris.
 - Une fonction ```getMonument```, qui affiche un monument en détail.
 - Une fonction ```favMonument```, qui prend l'imei du téléphone qui envoie la requête, et qui l'associe à l'identifiant ```objectid``` du monument. Le monument s'affiche alors différemment sur l'appareil.
-- Enfin, une fonction ```searchMonument```, qui prend en compte un champ ```term``` entré dans une recherche. La fonction renvoie tous les monuments dont le nom, le numéro de la commune ou le nom du département correspondent.
+- Enfin, une fonction ```searchMonuments```, qui prend en compte un champ ```term``` entré dans une recherche. La fonction renvoie tous les monuments dont le nom, le numéro de la commune ou le nom du département correspondent.
 
-Le détail de ces fonctions est expliqué [ici, dans le readme](https://github.com/GabrielMicoud/android-project-ismin/tree/main/api).
+Le détail du backend est expliqué [ici, dans le readme](https://github.com/GabrielMicoud/android-project-ismin/tree/main/api).
 
 
 
