@@ -23,6 +23,8 @@ export class AppController {
 
   @Post('search')
   async searchMonuments(@Body() body : {term : string}, @Query('imei') imei : string) : Promise<Monument[]> {
-    return await this.appService.searchMonumentByNameDepTypeArchi(body.term, imei);
+    let searchterm;
+    searchterm = body != undefined ? body.term : "";
+    return await this.appService.searchMonumentByNameDepTypeArchi(searchterm, imei);
   }
 }
